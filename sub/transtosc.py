@@ -3,13 +3,13 @@ import os
 import opencc
 from tqdm import tqdm
 
-def t2s(i, use_new=False, mode='t2s'):
+def t2s(i, use_new=0, mode='t2s'):
     ass_files = [name for name in os.listdir(i)
                  if (name.endswith('.ass') or name.endswith('.srt') or name.endswith('.ssa'))]
     bar = tqdm(range(len(ass_files)))
     for data in ass_files:
         old_data = i + '/' + data
-        if use_new:
+        if use_new==1:
             new = (i + '/new')
             isExists = os.path.exists(new)
             if not isExists:
@@ -40,7 +40,7 @@ def t2s(i, use_new=False, mode='t2s'):
 if __name__ == "__main__":
     parse = argparse.ArgumentParser("opencc 繁体转简体 简体转繁体", epilog='支持UTF-8,UTF-16,GBK编码')
     parse.add_argument('-p', nargs='*', default='', help="文件路径")
-    parse.add_argument('-R', default=False,help="是否替换 True or False")
+    parse.add_argument('-R', default=False,type=int,help="是否替换 0 or 1")
     parse.add_argument('-m', default='t2s', help="'t2s 繁转简 s2t 简转繁'")
     parse.format_help()
     arg = parse.parse_args()
